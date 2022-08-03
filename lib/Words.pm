@@ -11,10 +11,6 @@ has '_dictionary' => (
     init_arg => undef,
 );
 
-method ping() {
-    return '200 OK';
-}
-
 method read_word_list($word_list_file) {
     die "Word list file $word_list_file does not exist or is not readable"
         unless -r $word_list_file;
