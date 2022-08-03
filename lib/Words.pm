@@ -4,7 +4,6 @@ use 5.018;
 use Moo;
 use Function::Parameters qw/ :strict /;
 use Readonly;
-use Data::Printer;
 
 has '_dictionary' => (
     is => 'rw',

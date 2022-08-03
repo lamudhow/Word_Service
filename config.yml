@@ -64,4 +64,4 @@ template: "simple"
 # App-sepecific
 dictionary: "/usr/share/dict/words"
 serializer: "JSON"
-readme: "<p>For documentation, see <a href=\"https://github.com/lamudhow/Word_Service\">the GitHub repository</a>. Thanks</p>"
+readme: "<p><a href=\"/ping\">Ping</a></p><p><a href=\"/wordfinder/dgo\">WordFinder(dgo)</a></p><p>For documentation, see <a href=\"https://github.com/lamudhow/Word_Service\">the GitHub repository</a>. Thanks</p>"

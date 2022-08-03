@@ -1,11 +1,24 @@
-requires "Dancer2" => "0.300000";
+requires 'perl', '5.018000';
 
-recommends "YAML"             => "0";
-recommends "URL::Encode::XS"  => "0";
-recommends "CGI::Deurl::XS"   => "0";
-recommends "HTTP::Parser::XS" => "0";
+requires $_ for
+    qw/
+          Dancer2
+          Dancer2::Plugin::REST
+          Plack
+          Moo
+          Readonly
+          Function::Parameters
+      /;
 
-on "test" => sub {
-    requires "Test::More"            => "0";
-    requires "HTTP::Request::Common" => "0";
-};
+# We're sending the test harnesses to the container so no 'on "test"'
+
+requires $_ for
+    qw/
+          Test::More
+          Plack::Test
+          Test::JSON
+          HTTP::Request::Common
+          Ref::Util
+          Test2::Suite
+          File::Temp
+      /;
