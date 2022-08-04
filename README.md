@@ -26,13 +26,13 @@ $ curl http://localhost:8080/wordfinder/dgo
 There is quite a bit of boilerplate code in here from Dancer2. Most of
 the code I have written is in the following files:
 
-- [Dockerfile](/lamudhow/Word_Service/blob/main/Dockerfile)
-- [lib/Words.pm](/lamudhow/Word_Service/blob/main/lib/Words.pm)
-- [lib/Word_Service.pm](/lamudhow/Word_Service/blob/main/lib/Word_Service.pm)
-- [config.yml (end)](/lamudhow/Word_Service/blob/main/config.yml)
-- [cpanfile](/lamudhow/Word_Service/blob/main/cpanfile)
-- [t/Words.t](/lamudhow/Word_Service/blob/main/t/Words.t)
-- [t/t/002_index_route.t.t](/lamudhow/Word_Service/blob/main/t/t/002_index_route.t.t)
+- [Dockerfile](/Dockerfile)
+- [lib/Words.pm](/lib/Words.pm)
+- [lib/Word_Service.pm](/lib/Word_Service.pm)
+- [config.yml (end)](/config.yml)
+- [cpanfile](/cpanfile)
+- [t/Words.t](/t/Words.t)
+- [t/t/002_index_route.t.t](/t/t/002_index_route.t.t)
 
 ## Thanks
 
