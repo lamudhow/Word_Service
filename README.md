@@ -10,6 +10,7 @@ from GitHub
 ```
 $ git clone https://github.com/lamudhow/Word_Service.git
 ...
+$ cd Word_Service/
 $ docker build -t submission .
 ...
 $ docker run -d -p 8080:80 submission
