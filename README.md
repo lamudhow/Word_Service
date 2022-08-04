@@ -32,7 +32,7 @@ the code I have written is in the following files:
 - [config.yml (end)](/config.yml)
 - [cpanfile](/cpanfile)
 - [t/Words.t](/t/Words.t)
-- [t/002_index_route.t.t](/t/002_index_route.t.t)
+- [t/002_index_route.t.t](/t/002_index_route.t)
 
 ## Thanks
 
