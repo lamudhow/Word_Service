@@ -17,7 +17,7 @@ RUN apt-get update \
 COPY cpanfile cpanfile
 RUN cpanm -n --installdeps .
 
-# Drop down to user as we don't need to be privileged just running plackup
+# Drop down to user
 RUN adduser --disabled-password --disabled-login \
   --gecos "dancer2 user" --home /home/dancer2 dancer2
 USER dancer2
@@ -36,4 +36,4 @@ COPY views views
 # COPY t t
 # CMD [ "/usr/bin/tail", "-f", "/dev/null" ]
 
-CMD [ "/usr/bin/plackup", "-p", "5000", "/home/dancer2/bin/app.psgi" ]
+CMD [ "/usr/bin/plackup", "-p", "80", "/home/dancer2/bin/app.psgi" ]
