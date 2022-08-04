@@ -34,6 +34,12 @@ the code I have written is in the following files:
 - [t/Words.t](/t/Words.t)
 - [t/002_index_route.t](/t/002_index_route.t)
 
+## Notes
+
+I took a look at some public StrategicData repositories to get a feel
+for the coding style and preferred libraries that you use and have
+incorporated some of this in my submission.
+
 ## Thanks
 
 Thanks for the opportunity to show you my work. Please contact
