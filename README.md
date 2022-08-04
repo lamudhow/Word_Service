@@ -37,5 +37,5 @@ the code I have written is in the following files:
 ## Thanks
 
 Thanks for the opportunity to show you my work. Please contact
-[myself]{mailto:michael.brader@gmail.com) or Randi if you'd like to
+[myself](mailto:michael.brader@gmail.com) or Randi if you'd like to
 know anything more.
