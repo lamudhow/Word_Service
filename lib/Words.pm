@@ -5,6 +5,8 @@ use Moo;
 use Function::Parameters qw/ :strict /;
 use Readonly;
 
+our $VERSION = "0.1";
+# persistent word list
 has '_dictionary' => (
     is => 'rw',
     init_arg => undef,
@@ -22,8 +24,8 @@ method read_word_list($word_list_file) {
     while (my $word = <$fh>) {
         chomp $word;
         # Most word lists have all the single letters but we'll only
-        # add 'a' and 'i'
-        if ( length($word) == 1 && $word !~ /[ai]/ ) {
+        # add 'a' and 'I'
+        if ( length($word) == 1 && $word !~ /[aI]/ ) {
             next WORD;
         }
         push @{ $words }, $word;
@@ -39,6 +41,16 @@ method read_word_list($word_list_file) {
     return 1;
 }
 
+# the heart of the word finder. Creates a letter frequency hash of the
+# candidate then cycles through the dictionary building a similar
+# hash, excluding the word if:
+#
+# * it is longer than the candidate
+# * it contains letters not in the candidate
+# * it contains more instances of a particular letter than the candidate
+#
+# If any words are not excluded they are returned in a list reference,
+# otherwise the empty list is returned
 method check_string($candidate) {
     my $dictionary = $self->_dictionary();
 
@@ -57,7 +69,6 @@ method check_string($candidate) {
     }
 
     my $answers = [];
-    my $word_count = 0;
   WORD:
     foreach my $word ( @{ $dictionary } ) {
         if (length $word > $strlen) {
@@ -78,28 +89,38 @@ method check_string($candidate) {
 1;
 
 __END__
-    
-    unless () {
-    }
-    my @answers;
-  WORD:
-    foreach my $word (  ) {
-    }
-    while (my $line = <$fh>) {
-    chomp $line;
-    my $len = length $line;
-    next LINE if $len < $min;
-    next LINE if $len > $max;
-    # Evaluate candidate
-    my $cfound;
-  LETTER:
-    foreach my $letter (split //, $line) {
-        next LINE unless exists $count->{$letter};
-        next LINE unless ++$cfound->{$letter} <= $count->{$letter};
-    }
-    push @answers, $line;
-}
 
-if (@answers) {
-    say for sort { length $a <=> length $b } @answers;
-}
+=encoding utf-8
+
+=head1 NAME
+
+Words - Simple dictionary store with method to find words that contain
+certain letters
+
+=head1 BUGS AND LIMITATIONS
+
+We just keep the dictionary in a list. If we had a larger word list or
+performance was tight we'd probably want to create an index of some
+sort and/or cache the split words.
+
+There's no consideration of Unicode and letters that are semantically
+identical but have different codepoints.
+
+We make the following assumptions that weren't specified:
+
+ * Single letter words except 'a' & 'I' are to be ignored
+
+ * candidate strings and dictionary words are case
+   sensitive. ie. 'dog' does not match 'Dog'
+
+=head1 LICENSE
+
+Copyright (C) Michael Brader.
+This library is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+Michael Brader E<lt>michael.brader@gmail.comE<gt>
+
+=cut

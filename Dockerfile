@@ -1,5 +1,7 @@
+# Install our own perl as we're pretty lightweight so just take a basic Ubuntu
 FROM debian:buster-slim
 
+# Add Plack from apt to get the plackup script installed, and add dictionary
 RUN apt-get update \
   && apt-get install -y \
      build-essential \
@@ -15,6 +17,7 @@ RUN apt-get update \
 COPY cpanfile cpanfile
 RUN cpanm -n --installdeps .
 
+# Drop down to user as we don't need to be privileged just running plackup
 RUN adduser --disabled-password --disabled-login \
   --gecos "dancer2 user" --home /home/dancer2 dancer2
 USER dancer2
@@ -28,8 +31,9 @@ COPY config.yml config.yml
 COPY environments environments
 COPY public public
 COPY views views
+
 # Debugging
 # COPY t t
-
 # CMD [ "/usr/bin/tail", "-f", "/dev/null" ]
+
 CMD [ "/usr/bin/plackup", "-p", "5000", "/home/dancer2/bin/app.psgi" ]

@@ -31,20 +31,24 @@ like( dies { $words->read_word_list() },
     );
 }
 
-# Not readable
-my $nr_file = File::Temp->new();
-chmod 0000, $nr_file;
-like( dies { $words->read_word_list($nr_file) },
-    qr/\A\QWord list file $nr_file does not exist or is not readable/,
-    'Not readable'
-);
+# Not readable.
+{
+    my $nr_file = File::Temp->new();
+    chmod 0000, $nr_file;
+    like( dies { $words->read_word_list($nr_file) },
+          qr/\A\QWord list file $nr_file does not exist or is not readable/,
+          'Not readable (may fail on NTFS or other non UNIX filesystems)'
+      );
+}
 
 # Empty file
-my $empty_file = File::Temp->new();
-like( dies { $words->read_word_list($empty_file) },
-    qr/\A\QNo words found in word list file $empty_file/,
-    'Empty file'
-);
+{
+    my $empty_file = File::Temp->new();
+    like( dies { $words->read_word_list($empty_file) },
+          qr/\A\QNo words found in word list file $empty_file/,
+          'Empty file'
+      );
+}
 
 # Not read in yet
 like( dies { $words->check_string('dgo') },
@@ -53,34 +57,34 @@ like( dies { $words->check_string('dgo') },
 );
 
 # Create word list
-my $fh = File::Temp->new();
-my $fname = $fh->filename;
-print {$fh} $_ for <DATA>;
-close $fh;
-ok( lives { $words->read_word_list($fname) }, 'Read Word List' );
+{
+    my $fh = File::Temp->new();
+    my $fname = $fh->filename;
+    print {$fh} $_ for <DATA>;
+    close $fh;
+    ok( lives { $words->read_word_list($fname) }, 'Read Word List' );
 
-# Args
-like( dies { $words->check_string() },
-    qr/\A\QToo few arguments for method check_string (expected 2, got 1)\E/,
-    'No Arg'
-);
+    # Args
+    like( dies { $words->check_string() },
+          qr/\A\QToo few arguments for method check_string (expected 2, got 1)\E/,
+          'No Arg'
+      );
 
-# Specified test
-is( $words->check_string('dgo'), [ qw/ do dog go god / ], 'Specified test' );
+    # Specified test
+    is( $words->check_string('dgo'), [ qw/ do dog go god / ], 'Specified test' );
 
-# Capitals
-is( $words->check_string('Dgo'), [ qw/ Dog go / ], 'Capitals' );
+    is( $words->check_string('Dgo'), [ qw/ Dog go / ], 'Capitals' );
 
-# Single letters
-is( $words->check_string('a'), [ qw/ a / ], 'Single letter a' );
-is( $words->check_string('i'), [ qw/ i / ], 'Single letter i' );
-is( $words->check_string('b'), [], 'Single letter b' );
+    is( $words->check_string('a'), [ qw/ a / ], 'Single letter a' );
+    is( $words->check_string('I'), [ qw/ I / ], 'Single letter I' );
+    is( $words->check_string('A'), [], 'Single letter A' );
+    is( $words->check_string('i'), [], 'Single letter i' );
+    is( $words->check_string('b'), [], 'Single letter b' );
 
-# Duplicate letters
-is( $words->check_string('tttooa'), [ qw/ a at tattoo to too / ], 'Duplicate Letters' );
+    is( $words->check_string('tttooa'), [ qw/ a at tattoo to too / ], 'Duplicate Letters' );
 
-# Latin Extended
-is( $words->check_string('café'), [ qw/ a café / ], 'Latin Extended' );
+    is( $words->check_string('café'), [ qw/ a café / ], 'Latin Extended' );
+}
 
 # That's all she wrote
 done_testing();
@@ -96,7 +100,9 @@ todo "Advanced tests" => sub {
 };
 
 __DATA__
+A
 Dog
+I
 a
 at
 b
